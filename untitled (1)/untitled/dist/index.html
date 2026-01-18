@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CartoonLab AI - Generate Cartoons</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-palette"></i>
+                <h1>CartoonLab AI</h1>
+            </div>
+            <div class="user-actions">
+                <button class="btn btn-secondary" id="saveBtn">
+                    <i class="fas fa-save"></i> Save Cartoon
+                </button>
+                <button class="btn btn-primary" id="generateBtn">
+                    <i class="fas fa-magic"></i> Generate from Example
+                </button>
+            </div>
+        </header>
+
+        <!-- SIDEBAR: EXAMPLE CARTOONS -->
+        <aside class="sidebar">
+            <h2><i class="fas fa-images"></i> Example Cartoons</h2>
+            <div class="example-list" id="exampleList">
+                <!-- Example cards will be added by JavaScript -->
+            </div>
+        </aside>
+
+        <!-- MAIN CANVAS AREA -->
+        <main class="main-area">
+            <div class="canvas-container">
+                <div class="canvas-header">
+                    <h2>Your Cartoon Canvas</h2>
+                    <div class="canvas-tools">
+                        <button class="btn btn-secondary" id="clearCanvas">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                        <button class="btn btn-accent" id="undoBtn">
+                            <i class="fas fa-undo"></i> Undo
+                        </button>
+                    </div>
+                </div>
+                <canvas id="drawingCanvas" width="800" height="600"></canvas>
+            </div>
+
+            <!-- DRAWING CONTROLS -->
+            <div class="drawing-controls">
+                <button class="control-btn active" data-tool="brush">
+                    <i class="fas fa-paint-brush"></i>
+                    <span>Brush</span>
+                </button>
+                <button class="control-btn" data-tool="line">
+                    <i class="fas fa-slash"></i>
+                    <span>Line</span>
+                </button>
+                <button class="control-btn" data-tool="rectangle">
+                    <i class="fas fa-square"></i>
+                    <span>Rectangle</span>
+                </button>
+                <button class="control-btn" data-tool="circle">
+                    <i class="fas fa-circle"></i>
+                    <span>Circle</span>
+                </button>
+                <button class="control-btn" data-tool="text">
+                    <i class="fas fa-font"></i>
+                    <span>Text</span>
+                </button>
+                <button class="control-btn" data-tool="eraser">
+                    <i class="fas fa-eraser"></i>
+                    <span>Eraser</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- SOUND LIBRARY -->
+        <aside class="sound-library">
+            <h2><i class="fas fa-music"></i> Sound Library</h2>
+            
+            <div class="sound-stats">
+                <h3>1,247</h3>
+                <p>Trending Sounds Available</p>
+            </div>
+
+            <div class="sound-search">
+                <input type="text" id="soundSearch" placeholder="Search sounds...">
+            </div>
+
+            <div class="sound-categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="comedy">Comedy</button>
+                <button class="category-btn" data-category="action">Action</button>
+                <button class="category-btn" data-category="cartoon">Cartoon</button>
+                <button class="category-btn" data-category="music">Music</button>
+                <button class="category-btn" data-category="effects">Effects</button>
+            </div>
+
+            <div class="sound-list" id="soundList">
+                <!-- Sound items will be added by JavaScript -->
+            </div>
+        </aside>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CartoonLab Pro - AI Cartoon Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-palette"></i>
+                <h1>CartoonLab Pro</h1>
+            </div>
+            <div class="user-actions">
+                <button class="btn btn-secondary" id="saveBtn">
+                    <i class="fas fa-save"></i> Save PNG
+                </button>
+                <button class="btn btn-accent" id="saveGifBtn">
+                    <i class="fas fa-film"></i> Save GIF
+                </button>
+                <button class="btn btn-primary" id="generateBtn">
+                    <i class="fas fa-robot"></i> AI Generate
+                </button>
+            </div>
+        </header>
+
+        <!-- SIDEBAR: TOOLS & EXAMPLES -->
+        <aside class="sidebar">
+            <!-- COLOR PICKER -->
+            <div class="tool-section">
+                <h2><i class="fas fa-fill-drip"></i> Colors</h2>
+                <div class="color-picker">
+                    <input type="color" id="colorPicker" value="#6c5ce7">
+                    <div class="color-presets" id="colorPresets">
+                        <!-- Color presets will be added by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- BRUSH SETTINGS -->
+            <div class="tool-section">
+                <h2><i class="fas fa-paint-brush"></i> Brush</h2>
+                <div class="brush-controls">
+                    <div class="slider-container">
+                        <label>Size: <span id="brushSizeValue">5</span>px</label>
+                        <input type="range" id="brushSize" min="1" max="50" value="5">
+                    </div>
+                    <div class="slider-container">
+                        <label>Opacity: <span id="brushOpacityValue">100</span>%</label>
+                        <input type="range" id="brushOpacity" min="10" max="100" value="100">
+                    </div>
+                    <div class="brush-types">
+                        <button class="brush-type-btn active" data-brush="round">
+                            <div class="brush-preview round"></div>
+                            <span>Round</span>
+                        </button>
+                        <button class="brush-type-btn" data-brush="square">
+                            <div class="brush-preview square"></div>
+                            <span>Square</span>
+                        </button>
+                        <button class="brush-type-btn" data-brush="spray">
+                            <div class="brush-preview spray"></div>
+                            <span>Spray</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SHAPES & TOOLS -->
+            <div class="tool-section">
+                <h2><i class="fas fa-shapes"></i> Tools</h2>
+                <div class="tool-grid">
+                    <button class="tool-btn active" data-tool="brush" title="Brush">
+                        <i class="fas fa-paint-brush"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="line" title="Line">
+                        <i class="fas fa-slash"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="rectangle" title="Rectangle">
+                        <i class="fas fa-square"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="circle" title="Circle">
+                        <i class="fas fa-circle"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="polygon" title="Polygon">
+                        <i class="fas fa-draw-polygon"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="spray" title="Spray">
+                        <i class="fas fa-spray-can"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="text" title="Text">
+                        <i class="fas fa-font"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="eraser" title="Eraser">
+                        <i class="fas fa-eraser"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="fill" title="Fill Bucket">
+                        <i class="fas fa-fill"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="gradient" title="Gradient">
+                        <i class="fas fa-gradient"></i>
+                    </button>
+                </div>
+                <div class="tool-options" id="toolOptions">
+                    <!-- Polygon sides selector will appear here -->
+                </div>
+            </div>
+
+            <!-- LAYERS PANEL -->
+            <div class="tool-section">
+                <h2><i class="fas fa-layer-group"></i> Layers</h2>
+                <div class="layers-panel">
+                    <div class="layers-list" id="layersList">
+                        <!-- Layers will be added by JS -->
+                    </div>
+                    <div class="layer-actions">
+                        <button class="btn-small" id="addLayerBtn">
+                            <i class="fas fa-plus"></i> Add Layer
+                        </button>
+                        <button class="btn-small" id="mergeLayersBtn">
+                            <i class="fas fa-compress"></i> Merge
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXAMPLE CARTOONS -->
+            <div class="tool-section">
+                <h2><i class="fas fa-images"></i> AI Examples</h2>
+                <div class="example-list" id="exampleList">
+                    <!-- Example cards will be added by JS -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CANVAS AREA -->
+        <main class="main-area">
+            <!-- ANIMATION TIMELINE -->
+            <div class="animation-timeline">
+                <div class="timeline-header">
+                    <h3><i class="fas fa-film"></i> Animation Timeline</h3>
+                    <div class="timeline-controls">
+                        <button class="btn-small" id="addFrameBtn">
+                            <i class="fas fa-plus"></i> Add Frame
+                        </button>
+                        <button class="btn-small" id="playAnimationBtn">
+                            <i class="fas fa-play"></i> Play
+                        </button>
+                        <button class="btn-small" id="exportGifBtn">
+                            <i class="fas fa-file-export"></i> Export GIF
+                        </button>
+                    </div>
+                </div>
+                <div class="frames-container" id="framesContainer">
+                    <!-- Animation frames will be added here -->
+                </div>
+                <div class="timeline-slider">
+                    <input type="range" id="timelineSlider" min="0" max="100" value="0">
+                    <div class="timeline-markers"></div>
+                </div>
+            </div>
+
+            <!-- MAIN CANVAS -->
+            <div class="canvas-container">
+                <div class="canvas-header">
+                    <h2 id="currentLayerName">Layer 1</h2>
+                    <div class="canvas-tools">
+                        <button class="btn btn-secondary" id="clearCanvas">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                        <button class="btn btn-secondary" id="undoBtn">
+                            <i class="fas fa-undo"></i> Undo
+                        </button>
+                        <button class="btn btn-secondary" id="redoBtn">
+                            <i class="fas fa-redo"></i> Redo
+                        </button>
+                        <button class="btn btn-primary" id="aiEnhanceBtn">
+                            <i class="fas fa-wand-magic-sparkles"></i> AI Enhance
+                        </button>
+                    </div>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="drawingCanvas" width="800" height="600"></canvas>
+                    <div class="canvas-grid"></div>
+                </div>
+                <div class="canvas-status">
+                    <span id="cursorPosition">X: 0, Y: 0</span>
+                    <span id="zoomLevel">100%</span>
+                    <div class="zoom-controls">
+                        <button class="btn-tiny" id="zoomOutBtn">-</button>
+                        <button class="btn-tiny" id="zoomResetBtn">100%</button>
+                        <button class="btn-tiny" id="zoomInBtn">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOUND LIBRARY -->
+            <div class="sound-library">
+                <div class="sound-header">
+                    <h2><i class="fas fa-music"></i> Sound Library</h2>
+                    <div class="sound-stats">
+                        <div class="stat">
+                            <h3>1,247</h3>
+                            <p>Trending Sounds</p>
+                        </div>
+                        <div class="stat">
+                            <h3 id="playingSound">0</h3>
+                            <p>Playing Now</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sound-controls">
+                    <div class="sound-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="soundSearch" placeholder="Search 1000+ sounds...">
+                    </div>
+                    <div class="sound-categories" id="soundCategories">
+                        <!-- Categories added by JS -->
+                    </div>
+                </div>
+
+                <div class="sound-player">
+                    <div class="player-controls">
+                        <button class="player-btn" id="prevSound">
+                            <i class="fas fa-step-backward"></i>
+                        </button>
+                        <button class="player-btn play-btn" id="playPauseBtn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="player-btn" id="nextSound">
+                            <i class="fas fa-step-forward"></i>
+                        </button>
+                        <div class="volume-control">
+                            <i class="fas fa-volume-up"></i>
+                            <input type="range" id="volumeSlider" min="0" max="100" value="80">
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" id="soundProgress"></div>
+                    </div>
+                </div>
+
+                <div class="sound-list" id="soundList">
+                    <!-- Sound items added by JS -->
+                </div>
+
+                <div class="sound-dropper">
+                    <p><i class="fas fa-hand-point-up"></i> Drag sounds onto your cartoon!</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL FOR AI GENERATION -->
+    <div class="modal" id="aiModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-robot"></i> AI Cartoon Generator</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="ai-options">
+                    <div class="ai-option">
+                        <h4>Style Transfer</h4>
+                        <p>Apply cartoon style to your drawing</p>
+                        <button class="btn" id="styleTransferBtn">Apply Style</button>
+                    </div>
+                    <div class="ai-option">
+                        <h4>Auto-Complete</h4>
+                        <p>Let AI finish your drawing</p>
+                        <button class="btn" id="autoCompleteBtn">Complete Drawing</button>
+                    </div>
+                    <div class="ai-option">
+                        <h4>Character Generator</h4>
+                        <p>Generate cartoon characters</p>
+                        <button class="btn" id="characterGenBtn">Generate Character</button>
+                    </div>
+                </div>
+                <div class="ai-preview">
+                    <canvas id="aiPreviewCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<!-- TOM & JERRY WATERMARK -->
+<div class="watermark">
+    <div class="logo-container">
+        <div class="cat-mouse">
+            <div class="cat"></div>
+            <div class="mouse"></div>
+        </div>
+        <div class="tom-jerry-logo">TOM & JERRY</div>
+        <div class="logo-icon">🎬</div>
+    </div>
+</div>
+<!-- TOM & JERRY WATERMARK WITH IMAGES -->
+<div class="watermark" id="tomJerryWatermark">
+    <div class="logo-container">
+        <div class="character-images">
+            <!-- Tom image -->
+            <img src="https://i.imgur.com/R1lQv2J.png" 
+                 alt="Tom" 
+                 class="tom-image"
+                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyNSIgY3k9IjI1IiByPSIyNSIgZmlsbD0iI0ZGNkIzNSIvPjxwYXRoIGQ9Ik0xNSAyMEMxNSAyMi43NjEgMTcuMjM5IDI1IDIwIDI1QzIyLjc2MSAyNSAyNSAyMi43NjEgMjUgMjBDMjUgMTcuMjM5IDIyLjc2MSAxNSAyMCAxNUMxNy4yMzkgMTUgMTUgMTcuMjM5IDE1IDIwWiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyIiBmaWxsPSJibGFjayIvPjxwYXRoIGQ9Ik0zNSAzMEMzNSAzMi43NjEgMzcuMjM5IDM1IDQwIDM1QzQyLjc2MSAzNSA0NSAzMi43NjEgNDUgMzBDNDUgMjcuMjM5IDQyLjc2MSAyNSA0MCAyNUMzNy4yMzkgMjUgMzUgMjcuMjM5IDM1IDMwWiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjMwIiByPSIyIiBmaWxsPSJibGFjayIvPjxwYXRoIGQ9Ik0yMCAzNUwyMCA0NSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTQwIDQwTDQwIDQ1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4='">
+            
+            <!-- Jerry image -->
+            <img src="https://i.imgur.com/V4qkQ7t.png" 
+                 alt="Jerry" 
+                 class="jerry-image"
+                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyNSIgY3k9IjI1IiByPSIyNSIgZmlsbD0iIzg0NDUxMyIvPjxwYXRoIGQ9Ik0xNSAyMEMxNSAyMi43NjEgMTcuMjM5IDI1IDIwIDI1QzIyLjc2MSAyNSAyNSAyMi43NjEgMjUgMjBDMjUgMTcuMjM5IDIyLjc2MSAxNSAyMCAxNUMxNy4yMzkgMTUgMTUgMTcuMjMkgMTUgMjBaIiBmaWxsPSJ3aGl0ZSIvPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjIiIGZpbGw9ImJsYWNrIi8+PHBhdGggZD0iTTM1IDMwQzM1IDMyLjc2MSAzNy4yMzkgMzUgNDAgMzVDNDIuNzYxIDM1IDQ1IDMyLjc2MSA0NSAzMEM0NSAyNy4yMzkgNDIuNzYxIDI1IDQwIDI1QzM3LjIzOSAyNSAzNSAyNy4yMzkgMzUgMzBaIiBmaWxsPSJ3aGl0ZSIvPjxjaXJjbGUgY3g9IjQwIiBjeT0iMzAiIHI9IjIiIGZpbGw9ImJsYWNrIi8+PHBhdGggZD0iTTIwIDM1TDIwIDQ1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNNDAgNDBMNDAgNDUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIvPjxwYXRoIGQ9Ik0zMCAxMEwzMCAxNSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+'>
+        </div>
+        
+        <div class="logo-text">TOM & JERRY</div>
+        
+        <div class="watermark-controls">
+            <button class="wm-btn" onclick="toggleWatermark()" title="Hide/Show">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button class="wm-btn" onclick="stampWatermark()" title="Stamp on Canvas">
+                <i class="fas fa-stamp"></i>
+            </button>
+            <button class="wm-btn" onclick="randomizePosition()" title="Random Position">
+                <i class="fas fa-random"></i>
+            </button>
+        </div>
+    </div>
+</div>
+                                        <!-- PRIVACY BANNER -->
+<div class="privacy-banner" id="privacyBanner">
+    <div class="banner-content">
+        <div class="banner-text">
+            <h3><i class="fas fa-cookie-bite"></i> Privacy First Cartoon Lab</h3>
+            <p>We believe in creative freedom without tracking. This website uses <strong>NO cookies</strong>, <strong>NO ads</strong>, and <strong>NO tracking</strong>. Your cartoons and data stay 100% private on your device. No data is sent to any server.</p>
+        </div>
+        <div class="banner-actions">
+            <button class="btn btn-primary" onclick="openPrivacySettings()">
+                <i class="fas fa-user-shield"></i> Privacy Settings
+            </button>
+            <button class="btn btn-secondary" onclick="acceptPrivacy()">
+                <i class="fas fa-check-circle"></i> Got it!
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- PRIVACY SETTINGS MODAL -->
+<div class="privacy-modal" id="privacyModal">
+    <div class="privacy-modal-content">
+        <div class="privacy-header">
+            <h2><i class="fas fa-shield-alt"></i> Privacy & Settings</h2>
+            <button class="close-privacy" onclick="closePrivacySettings()">&times;</button>
+        </div>
+        
+        <div class="privacy-body">
+            <div class="privacy-section">
+                <h3><i class="fas fa-info-circle"></i> Our Privacy Promise</h3>
+                <p>CartoonLab is built with privacy as a core feature. We don't use cookies, tracking scripts, or third-party analytics. Everything happens in your browser.</p>
+                
+                <div class="stats-counter">
+                    <h4><i class="fas fa-chart-line"></i> Local Statistics</h4>
+                    <p>These statistics are stored locally on your device only:</p>
+                    <div class="stats-grid" id="localStats">
+                        <!-- Stats populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="privacy-section">
+                <h3><i class="fas fa-sliders-h"></i> Privacy Settings</h3>
+                <div class="toggle-group">
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h4>Auto-save Cartoons</h4>
+                            <p>Automatically save your work locally (recommended)</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="autoSaveToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h4>Local Statistics</h4>
+                            <p>Count cartoons created (stored locally only)</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="localStatsToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h4>Sound Effects</h4>
+                            <p>Play interface sound effects</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="soundEffectsToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="privacy-section">
+                <h3><i class="fas fa-database"></i> Your Data</h3>
+                <p>All data is stored locally in your browser:</p>
+                <div class="data-controls">
+                    <button class="btn btn-secondary" onclick="exportLocalData()">
+                        <i class="fas fa-download"></i> Export My Data
+                    </button>
+                    <button class="btn btn-accent" onclick="clearLocalData()">
+                        <i class="fas fa-trash-alt"></i> Clear All Local Data
+                    </button>
+                </div>
+            </div>
+            
+            <div class="privacy-section">
+                <h3><i class="fas fa-code"></i> Open Source Promise</h3>
+                <p>This is a learning project. The code is transparent and free. No hidden trackers, no ads, no premium features.</p>
+                <button class="btn btn-primary" onclick="viewSourceCode()">
+                    <i class="fab fa-github"></i> View Source Code
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ANNOUNCEMENT BANNER -->
+<div class="announcement-banner" id="announcementBanner">
+    <div class="announcement-content">
+        <div class="announcement-text">
+            <i class="fas fa-bullhorn"></i>
+            <p>🎉 <strong>Ads-Free & Cookies-Free</strong> - Enjoy unlimited cartoon creation without any tracking or interruptions!</p>
+        </div>
+        <button class="close-announcement" onclick="closeAnnouncement()">&times;</button>
+    </div>
+</div>
+
+<!-- PRIVACY STATUS BADGE -->
+<div class="privacy-badge" id="privacyBadge">
+    <button class="badge-btn" onclick="openPrivacySettings()">
+        <i class="fas fa-user-shield"></i> Privacy Active
+    </button>
+</div>
+
+<!-- PRIVACY STATUS INDICATOR -->
+<div class="privacy-status" id="privacyStatus">
+    <i class="fas fa-shield-alt"></i>
+    <span>Privacy Protected</span>
+</div>
+                                <!-- SOUND LIBRARY -->
+<div class="sound-library sound-library-expanded">
+    <div class="sound-header">
+        <h2><i class="fas fa-music"></i> Sound Library</h2>
+        <div class="sound-stats">
+            <div class="stat">
+                <h3 id="totalSounds">156</h3>
+                <p>Pre-loaded Sounds</p>
+            </div>
+            <div class="stat">
+                <h3 id="playingSound">0</h3>
+                <p>Playing Now</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK PLAY BAR -->
+    <div class="quick-play-bar">
+        <div class="quick-play-header">
+            <h4><i class="fas fa-bolt"></i> Quick Play</h4>
+            <div class="quick-play-buttons">
+                <button class="btn-tiny" onclick="playRandomSound()" title="Random Sound">
+                    <i class="fas fa-random"></i>
+                </button>
+                <button class="btn-tiny" onclick="playAllCategory('cartoon')" title="Play Cartoon Sounds">
+                    <i class="fas fa-play-circle"></i>
+                </button>
+            </div>
+        </div>
+        <div class="quick-sounds" id="quickSounds">
+            <!-- Quick sound buttons added by JavaScript -->
+        </div>
+    </div>
+
+    <!-- ENHANCED SOUND PLAYER -->
+    <div class="sound-player-enhanced" id="enhancedSoundPlayer">
+        <div class="now-playing">
+            <div class="now-playing-emoji" id="nowPlayingEmoji">🎵</div>
+            <div class="now-playing-info">
+                <h4 id="nowPlayingTitle">Select a Sound</h4>
+                <p id="nowPlayingCategory">Click any sound to play</p>
+            </div>
+        </div>
+        <div class="player-controls-enhanced">
+            <button class="player-btn-enhanced" onclick="previousSound()" title="Previous">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="player-btn-enhanced play-pause-btn" id="enhancedPlayPauseBtn" onclick="toggleEnhancedPlayPause()" title="Play/Pause">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="player-btn-enhanced" onclick="nextSound()" title="Next">
+                <i class="fas fa-step-forward"></i>
+            </button>
+            <div class="progress-container" onclick="seekSound(event)" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+                <span class="progress-time current-time" id="currentTime">0:00</span>
+                <span class="progress-time duration-time" id="durationTime">0:00</span>
+            </div>
+        </div>
+        <div class="volume-controls">
+            <div class="volume-slider-container">
+                <i class="fas fa-volume-down"></i>
+                <input type="range" class="volume-slider" id="enhancedVolumeSlider" min="0" max="100" value="80">
+                <i class="fas fa-volume-up"></i>
+                <span class="volume-value" id="volumeValue">80%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOUND EFFECTS BANK -->
+    <div class="effects-bank">
+        <h4><i class="fas fa-magic"></i> Quick Effects</h4>
+        <div class="effects-grid" id="effectsGrid">
+            <!-- Effect buttons added by JavaScript -->
+        </div>
+    </div>
+
+    <!-- CATEGORY FILTERS -->
+    <div class="sound-categories-grid" id="soundCategoriesGrid">
+        <!-- Category filters added by JavaScript -->
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="sound-search-enhanced">
+        <i class="fas fa-search"></i>
+        <input type="text" id="enhancedSoundSearch" placeholder="Search 150+ pre-loaded sounds...">
+    </div>
+
+    <!-- RECENTLY USED -->
+    <div class="recent-sounds">
+        <h4><i class="fas fa-history"></i> Recently Used</h4>
+        <div class="recent-list" id="recentSoundsList">
+            <!-- Recent sounds added by JavaScript -->
+        </div>
+    </div>
+
+    <!-- SOUND CATEGORIES -->
+    <div id="soundCategoriesContainer">
+        <!-- Categories added by JavaScript -->
+    </div>
+
+    <!-- SOUND IMPORT -->
+    <div class="sound-import">
+        <h4><i class="fas fa-file-import"></i> Add Your Own Sounds</h4>
+        <p style="font-size: 12px; color: #666; margin-bottom: 15px;">Upload your own sound effects (MP3, WAV, OGG)</p>
+        <div class="import-buttons">
+            <button class="btn-small" onclick="document.getElementById('soundFileInput').click()">
+                <i class="fas fa-upload"></i> Upload Sound
+            </button>
+            <input type="file" id="soundFileInput" accept="audio/*" style="display: none;" onchange="handleSoundUpload(event)">
+            <button class="btn-small" onclick="recordSound()">
+                <i class="fas fa-microphone"></i> Record
+            </button>
+        </div>
+    </div>
+</div>
+                                            <!--
+Copyright (c) 2024 Your Name. 
+This work is licensed under MIT License.
+See LICENSE file for details.
+-->
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
